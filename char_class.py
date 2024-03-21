@@ -27,7 +27,7 @@ class CharClass:
                 continue
             
             if char_id_class in classes_id_name:
-                char_id_class_confirm = str(input(f"Você escolheu '{classes_id_name[char_id_class]}'.\nTem certeza que deseja prosseguir? (S / N)").upper())
+                char_id_class_confirm = str(input(f"Você escolheu '{classes_id_name[char_id_class]}'.\nTem certeza que deseja prosseguir? (S / N) ").upper())
                 if char_id_class_confirm == 'S':
                     print(f"Sua classe é '{classes_id_name[char_id_class]}'.")
                     return char_id_class

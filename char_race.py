@@ -27,7 +27,7 @@ class CharRace:
                 continue
             
             if char_id_race in races_id_name:
-                char_id_race_confirm = str(input(f"Você escolheu '{races_id_name[char_id_race]}'.\nTem certeza que deseja prosseguir? (S / N)").upper())
+                char_id_race_confirm = str(input(f"Você escolheu '{races_id_name[char_id_race]}'.\nTem certeza que deseja prosseguir? (S / N) ").upper())
                 if char_id_race_confirm == 'S':
                     print(f"Sua raça é '{races_id_name[char_id_race]}'.")
                     return char_id_race
