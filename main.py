@@ -1,2 +1,5 @@
-from character import Character
-from char_class import Character_class
+from character import character
+from duel_roll import roll
+
+character.character_creation()
+players = character.chars_name
