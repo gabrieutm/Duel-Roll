@@ -1,4 +1,4 @@
-class Character:
+class CharCreation:
 
     def __init__(self):
 
@@ -75,16 +75,16 @@ class Character:
         while len(self.characters) < 2:
             self.character_selection()
             self.character_points()
-            self.characters[character.char_name] = {
-                "race": character.char_race_name,
-                "class": character.char_class_name,
-                "att_groups": character.char_att,
-                "attributes": character.id_att,
-                "max_hp": character.char_max_hp,
-                "current_hp": character.char_max_hp,
-                "armor": character.char_armor_total,
-                "current_armor": character.char_armor_total,
-                "stamina": character.char_stamina_total,
+            self.characters[charcreation.char_name] = {
+                "race": charcreation.char_race_name,
+                "class": charcreation.char_class_name,
+                "att_groups": charcreation.char_att,
+                "attributes": charcreation.id_att,
+                "max_hp": charcreation.char_max_hp,
+                "current_hp": charcreation.char_max_hp,
+                "armor": charcreation.char_armor_total,
+                "current_armor": charcreation.char_armor_total,
+                "stamina": charcreation.char_stamina_total,
                 "death": False
                 }
             if len(self.characters) < 2:
@@ -96,10 +96,8 @@ class Character:
                 print(f"Que o duelo comece entre {self.player1} e {self.player2}!")
                 return self.characters, self.player1, self.player2
 
-character = Character()
+charcreation = CharCreation()
 
 if __name__ == '__main__':
-    character.character_creation()
-    #print(character.characters)
-    print(character.player1)
-    print(character.player2)
+    charcreation.character_creation()
+    print(charcreation.characters[charcreation.player1]['att_groups']['ATK'])

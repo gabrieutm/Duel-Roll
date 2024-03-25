@@ -1,19 +1,9 @@
-class Duel:
+from char_creation import charcreation
 
-    def __init__(self):
-        from character import character
-        self.character = character
+from duel_round import duelround
 
-        from duel_roll import roll
-        self.roll = roll
+charcreation.character_creation()
 
-    def duel_action(self):
-        duel_action_next_id =+ 1
-        
-
-    def duel_bonus_action(self):
-        pass
-
-    def duel_progression(self):
-        while not any(char_status["death"] for char_status in self.character.characters.values()):
-            self.roll.roll_initiative(self, self.character.player1, self.character.player2)
+def duel_progression(self):
+    while not any(char_status["death"] for char_status in self.character.characters.values()):
+        duelround.add_round()
