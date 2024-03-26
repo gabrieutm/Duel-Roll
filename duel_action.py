@@ -39,6 +39,9 @@ class DuelAction:
         self.skillsplatk_excruciating_gaze = skillsplatk_excruciating_gaze
 
         self.action_groups = {1: {'Atacar': {1: 'Ataque Simples', 2: 'Ataque Poderoso', 3: 'Ataque Especial'}}, 2: {'Defender': {1: 'Defesa', 2: 'Evasão'}}, 3: {'Curar': {1: 'Cura', 2: 'Descanso'}}}
+    
+    def duel_action_stamina_check(self, player, action_stamina_cost):
+        return self.charactercreation.characters[player]['stamina'] >= action_stamina_cost
 
     def duel_action_choices(self, player):
         while True:
@@ -56,7 +59,9 @@ class DuelAction:
                 continue
 
             elif choice in self.action_groups.keys():
+
                 if choice == 1:
+
                     while True:
                         print("Opções de ataque: ")
                         for key, value in self.action_groups[1]['Atacar'].items():
@@ -123,36 +128,169 @@ class DuelAction:
                 print("Entrada inválida. Por favor, insira um número da lista.")
                 continue
     
-    def duel_action_move(self, player, final_choice):
+    def duel_action_move(self, player, enemy, final_choice):
         if final_choice == 'Ataque Simples':
-            print("Opções de Ataque Simples: ")
-            
-            if self.charactercreation.characters[player]['class'] == 'Mago':
-                print(f"{self.skillsplatk_ethereal_burst['id_skill']} - {self.skillsplatk_ethereal_burst['name_skill']}\n{self.skillsplatk_ethereal_burst['info_skill']['skill_desc']}")
-                final_choice_confirm = input("Deseja realizar este ataque? (S/N)").upper()
-                if final_choice_confirm == 'S':
-                    roll_attack = self.roll.roll_attack()
-                    if roll_attack > self.charactercreation.characters[player]['current_armor']:
-                        return self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
+
+            if self.duel_action_stamina_check(player, self.skillsplatk.skill_spl_attack_cost) == True:
+
+                print("Opções de Ataque Simples: ")
+                
+                if self.charactercreation.characters[player]['class'] == 'Mago':
+
+                    print(f"{self.skillsplatk_ethereal_burst['id_skill']} - {self.skillsplatk_ethereal_burst['name_skill']}\n{self.skillsplatk_ethereal_burst['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar este ataque? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        roll_attack = self.roll.roll_attack()
+
+                        if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
+                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
+                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
+                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
+                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
+                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
+                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                        else:
+                            print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
+
+                        return roll_attack
+
                     else:
-                        print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[player]['current_armor']})")
-                else:
-                    return self.duel_action_choices(player)
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
 
 
 
+                if self.charactercreation.characters[player]['class'] == 'Bárbaro':
+
+                    print(f"{self.skillsplatk_wild_charge['id_skill']} - {self.skillsplatk_wild_charge['name_skill']}\n{self.skillsplatk_wild_charge['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar este ataque? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        roll_attack = self.roll.roll_attack()
+
+                        if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
+                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
+                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
+                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
+                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
+                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
+                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                        else:
+                            print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
+
+                        return roll_attack
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
+                if self.charactercreation.characters[player]['class'] == 'Assassino':
+
+                    print(f"{self.skillsplatk_shadow_arrow['id_skill']} - {self.skillsplatk_shadow_arrow['name_skill']}\n{self.skillsplatk_shadow_arrow['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar este ataque? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        roll_attack = self.roll.roll_attack()
+
+                        if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
+                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
+                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
+                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
+                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
+                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
+                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                        else:
+                            print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
+
+                        return roll_attack
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
 
 
+                if self.charactercreation.characters[player]['class'] == 'Necromante':
+
+                    print(f"{self.skillsplatk_skeleton['id_skill']} - {self.skillsplatk_skeleton['name_skill']}\n{self.skillsplatk_skeleton['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar este ataque? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        roll_attack = self.roll.roll_attack()
+
+                        if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
+                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
+                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
+                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
+                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
+                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
+                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                        else:
+                            print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
+
+                        return roll_attack
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
 
 
-            if char_class == 'Bárbaro':
-                print(f"{self.skillsplatk_wild_charge['id_skill']} - {self.skillsplatk_wild_charge['name_skill']}\n{self.skillsplatk_wild_charge['info_skill']['skill_desc']}")
-            if char_class == 'Assassino':
-                print(f"{self.skillsplatk_shadow_arrow['id_skill']} - {self.skillsplatk_shadow_arrow['name_skill']}\n{self.skillsplatk_shadow_arrow['info_skill']['skill_desc']}")
-            if char_class == 'Necromante':
-                print(f"{self.skillsplatk_skeleton['id_skill']} - {self.skillsplatk_skeleton['name_skill']}\n{self.skillsplatk_skeleton['info_skill']['skill_desc']}")
-            if char_class == 'Bruxa':
-                print(f"{self.skillsplatk_excruciating_gaze['id_skill']} - {self.skillsplatk_excruciating_gaze['name_skill']}\n{self.skillsplatk_excruciating_gaze['info_skill']['skill_desc']}")
+                if self.charactercreation.characters[player]['class'] == 'Bruxa':
+
+                    print(f"{self.skillsplatk_excruciating_gaze['id_skill']} - {self.skillsplatk_excruciating_gaze['name_skill']}\n{self.skillsplatk_excruciating_gaze['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar este ataque? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        roll_attack = self.roll.roll_attack()
+
+                        if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
+                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
+                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
+                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
+                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
+                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
+                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                        else:
+                            print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
+
+                        return roll_attack
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
+
+
+            else:
+                print(f"Você não possui vigor o suficiente ({self.charactercreation.characters[player]['stamina']}) para realizar esta ação (custo: {self.skillsplatk.skill_spl_attack_cost}).\nPor gentileza, selecione outra ação ou utilize seu turno para descansar.")
+                self.duel_action_choices(player)
+                back_to_action_choices = True
+                return back_to_action_choices
+            
+            
+
         if final_choice == 'Ataque Poderoso':
             pass
         if final_choice == 'Ataque Especial':
@@ -171,5 +309,5 @@ duelaction = DuelAction()
 if __name__ == '__main__':
     duelactionchoice = duelaction.duel_action_choices('gab')
     #print(duelactionchoice)
-    duelactionmove = duelaction.duel_action_move('Bruxa', duelactionchoice)
+    duelactionmove = duelaction.duel_action_move('gab', 'gui', duelactionchoice)
     #print(duelactionmove)

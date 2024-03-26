@@ -26,6 +26,7 @@ class SkillSimpleAttack:
         skill_value = attacker['att_groups']['ATK']
         skill_damage = skill_roll + skill_value
         skill_effect = skill_name['info_skill']['skill_effect']
+        print(f"Dado: {skill_roll} + Atributo atk: {skill_value} = Dano total: {skill_damage}")
         return skill_roll, skill_value, skill_damage, skill_effect
 
 skillsplatk = SkillSimpleAttack()
