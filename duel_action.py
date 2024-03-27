@@ -2,9 +2,6 @@ class DuelAction:
 
     def __init__(self):
         """
-        from char_skill_def import skilldef
-        self.skilldef = skilldef
-
         from char_skill_evasion import skilleva
         self.skilleva = skilleva
 
@@ -37,6 +34,17 @@ class DuelAction:
         self.skillsplatk_shadow_arrow = skillsplatk_shadow_arrow
         self.skillsplatk_skeleton = skillsplatk_skeleton
         self.skillsplatk_excruciating_gaze = skillsplatk_excruciating_gaze
+
+
+
+        from char_skill_defense import skilldef, skilldef_magic_shield, skilldef_iron_skin, skilldef_invisible_cloak, skilldef_bone_shield, skilldef_bad_and_good_luck
+
+        self.skilldef = skilldef
+        self.skilldef_magic_shield = skilldef_magic_shield
+        self.skilldef_iron_skin = skilldef_iron_skin
+        self.skilldef_invisible_cloak = skilldef_invisible_cloak
+        self.skilldef_bone_shield = skilldef_bone_shield
+        self.skilldef_bad_and_good_luck = skilldef_bad_and_good_luck
 
         self.action_groups = {1: {'Atacar': {1: 'Ataque Simples', 2: 'Ataque Poderoso', 3: 'Ataque Especial'}}, 2: {'Defender': {1: 'Defesa', 2: 'Evasão'}}, 3: {'Curar': {1: 'Cura', 2: 'Descanso'}}}
     
@@ -295,14 +303,137 @@ class DuelAction:
             pass
         if final_choice == 'Ataque Especial':
             pass
+        
+        
+        
         if final_choice == 'Defesa':
-            pass
+
+            if self.duel_action_stamina_check(player, self.skilldef.skill_def_cost) == True:
+
+                print("Opções de Defesa: ")
+                
+                if self.charactercreation.characters[player]['class'] == 'Mago':
+
+                    print(f"{self.skilldef_magic_shield['id_skill']} - {self.skilldef_magic_shield['name_skill']}\n{self.skilldef_magic_shield['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_magic_shield['name_skill'])
+                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
+                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                
+
+
+                if self.charactercreation.characters[player]['class'] == 'Bárbaro':
+
+                    print(f"{self.skilldef_iron_skin['id_skill']} - {self.skilldef_iron_skin['name_skill']}\n{self.skilldef_iron_skin['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_iron_skin['name_skill'])
+                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
+                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
+
+
+                if self.charactercreation.characters[player]['class'] == 'Assassino':
+
+                    print(f"{self.skilldef_invisible_cloak['id_skill']} - {self.skilldef_invisible_cloak['name_skill']}\n{self.skilldef_invisible_cloak['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_invisible_cloak['name_skill'])
+                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
+                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
+
+
+                if self.charactercreation.characters[player]['class'] == 'Necromante':
+
+                    print(f"{self.skilldef_bone_shield['id_skill']} - {self.skilldef_bone_shield['name_skill']}\n{self.skilldef_bone_shield['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_bone_shield['name_skill'])
+                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
+                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
+
+
+                if self.charactercreation.characters[player]['class'] == 'Bruxa':
+
+                    print(f"{self.skilldef_bad_and_good_luck['id_skill']} - {self.skilldef_bad_and_good_luck['name_skill']}\n{self.skilldef_bad_and_good_luck['info_skill']['skill_desc']}")
+
+                    final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
+
+                    if final_choice_confirm == 'S':
+                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_bad_and_good_luck['name_skill'])
+                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
+                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
+                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
+                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+
+                    else:
+                        self.duel_action_choices(player)
+                        back_to_action_choices = True
+                        return back_to_action_choices
+                    
+
+
+            else:
+                print(f"Você não possui vigor o suficiente ({self.charactercreation.characters[player]['stamina']}) para realizar esta ação (custo: {self.skillsplatk.skill_spl_attack_cost}).\nPor gentileza, selecione outra ação ou utilize seu turno para descansar.")
+                self.duel_action_choices(player)
+                back_to_action_choices = True
+                return back_to_action_choices
+            
+
+
         if final_choice == 'Evasão':
             pass
+
+
+
         if final_choice == 'Cura':
             pass
+
+
+
         if final_choice == 'Descanso':
             pass
+
+        
 
 duelaction = DuelAction()
 

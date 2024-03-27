@@ -4,8 +4,8 @@ import random
 class SkillHealing:
 
     def __init__(self):
-        self.skill_healing_cost = 3
-        self.skill_healing_cooldown = 1
+        self.skill_healing_cost = 2
+        self.skill_healing_cooldown = 2
         self.skill_healing_cooldown_on = False
         self.skill_next_id = 0
         self.skills_healing = []

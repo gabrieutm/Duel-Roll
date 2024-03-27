@@ -4,8 +4,8 @@ import random
 class SkillForceAttack:
 
     def __init__(self):
-        self.skill_frc_attack_cost = 3
-        self.skill_frc_attack_cooldown = 0
+        self.skill_frc_attack_cost = 4
+        self.skill_frc_attack_cooldown = 1
         self.skill_frc_attack_cooldown_on = False
         self.skill_next_id = 0
         self.skills_frc_attack = []
