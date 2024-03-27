@@ -4,8 +4,8 @@ import random
 class SkillSpecial:
 
     def __init__(self):
-        self.skill_spc_cost = 3
-        self.skill_spc_cooldown = 0
+        self.skill_spc_cost = 5
+        self.skill_spc_cooldown = 3
         self.skill_spc_cooldown_on = False
         self.skill_next_id = 0
         self.skills_spc = []

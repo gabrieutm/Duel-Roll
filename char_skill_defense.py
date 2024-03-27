@@ -20,15 +20,52 @@ class SkillDefense:
     def skill_defense_effect(self):
         pass
 
-    def skill_defense(self, defenser, skill_name):
-        skill_roll = skill_name['info_skill']['skill_roll']
-        skill_value = defenser['att_groups']['DEF']
-        skill_armor = defenser['current_armor']
-        skill_defense_total = skill_roll + skill_value + skill_armor
-        skill_effect = skill_name['info_skill']['skill_effect']
-        defenser['current_armor'] = skill_defense_total
-        print(f"Dado: {skill_roll} + Atributo def: {skill_value} + {skill_armor} = Defesa total: {skill_defense_total}")
-        return skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+    def skill_defense(self, defenser, characters, action_menu):
+        
+        for skills in skilldef.skills_def:
+            
+            for skill_values in skills.values():
+                
+                if skill_values == defenser['class']:
+
+                    while True:
+
+                        print(f"{skills['id_skill']} - {skills['name_skill']}\n{skills['info_skill']['skill_desc']}")
+                            
+                        choose_skill = input("Digite o respectivo número da habilidade que deseja utilizar: (ou digite 'voltar')").lower()
+                        
+                        if choose_skill == 'voltar':
+
+                            action_menu()
+                            break
+
+                        elif int(choose_skill) in list(skills.values()):
+                            
+                            choose_skill_confirm = input(f"Tem certeza que deseja usar a habilidade {skills['name_skill']}? (S/N) ").upper()
+                            
+                            if choose_skill_confirm == 'S':
+                                
+                                skill_roll = skills['info_skill']['skill_roll']
+                                skill_value = defenser['att_groups']['DEF']
+                                skill_armor = defenser['current_armor']
+                                skill_defense_total = skill_roll + skill_value + skill_armor
+                                skill_effect = skills['info_skill']['skill_effect']
+                                defenser['current_armor'] = skill_defense_total
+                                print(f"Dado: {skill_roll} + Atributo def: {skill_value} + Armadura: {skill_armor} = Defesa total: {skill_defense_total}")
+                                remaining_stamina = max(0, characters[defenser]['stamina'] - skilldef.skill_def_cost)
+                                characters[defenser]['stamina'] = remaining_stamina
+                                print(f"Vigor restante de {defenser}: {remaining_stamina}")
+
+                                skill_result = (skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect, remaining_stamina)
+
+                                break
+                            
+                            else:
+                                continue
+                        
+                        else:
+                            print("Entrada inválida. Por favor, insira um número da lista.")
+                            continue
 
 skilldef = SkillDefense()
 
@@ -42,7 +79,7 @@ skilldef_bone_shield = skilldef.skill_def_creation('Necromante', 'Escudo de Osso
 
 skilldef_bone_shield = skilldef.skill_def_creation('Necromante', 'Escudo de Ossos', ('O necromante manipula os restos mortais calcificados ao seu redor e envolve sua armadura em ossos quase indestrutíveis.', 'Até o final do próximo turno do oponente, você ganha 1-4+DEF de armadura e, caso o oponente consiga acertar um ataque, estilhaços de ossos voam na direçam dele, causando 1-4 de dano.', None, random.randint(1, 4)))
 
-skilldef_bad_and_good_luck = skilldef.skill_def_creation('Bruxa', 'Sorte e Azar', ('A bruxa canaliza seu poder para alterar os destinos e evitar ser atacada.', 'Até o final do próximo turno do oponente, ele tem ataque reduzido igual a seu atributo de defesa e você ganha 1-4+DEF de armadura.', None, random.randint(1, 4)))
+skilldef_bad_and_good_luck = skilldef.skill_def_creation('Bruxa', 'Sorte e Azar', ('A bruxa canaliza seu poder para alterar o destino e evitar ser atacada.', 'Até o final do próximo turno do oponente, ele tem ataque reduzido igual a seu atributo de defesa e você ganha 1-4+DEF de armadura.', None, random.randint(1, 4)))
 
 if __name__ == '__main__':
-    print(skilldef_bone_shield)
+    pass

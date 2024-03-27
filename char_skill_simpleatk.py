@@ -21,13 +21,19 @@ class SkillSimpleAttack:
     def skill_spl_attack_effect(self):
         pass
     
-    def skill_spl_attack_hit(self, attacker, skill_name):
+    def skill_spl_attack_hit(self, attacker, enemy, skill_name, characters):
         skill_roll = skill_name['info_skill']['skill_roll']
         skill_value = attacker['att_groups']['ATK']
         skill_damage = skill_roll + skill_value
         skill_effect = skill_name['info_skill']['skill_effect']
         print(f"Dado: {skill_roll} + Atributo atk: {skill_value} = Dano total: {skill_damage}")
-        return skill_roll, skill_value, skill_damage, skill_effect
+        remaining_hp = characters[enemy]['current_hp'] - skill_damage
+        characters[enemy]['current_hp'] = remaining_hp
+        print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
+        remaining_stamina = max(0, characters[attacker]['stamina'] - self.skill_spl_attack_cost)
+        characters[attacker]['stamina'] = remaining_stamina
+        print(f"Vigor restante de {attacker}: {remaining_stamina}")
+        return skill_roll, skill_value, skill_damage, skill_effect, remaining_hp, remaining_stamina
 
 skillsplatk = SkillSimpleAttack()
 

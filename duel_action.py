@@ -153,14 +153,7 @@ class DuelAction:
                         roll_attack = self.roll.roll_attack()
 
                         if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
-                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
-                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
-                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
-                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
-                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
-                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                            self.skillsplatk.skill_spl_attack_hit(player, enemy, self.skillsplatk_ethereal_burst['name_skill'], self.charactercreation.characters)
                         else:
                             print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
 
@@ -183,14 +176,7 @@ class DuelAction:
                         roll_attack = self.roll.roll_attack()
 
                         if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
-                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
-                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
-                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
-                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
-                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
-                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                            self.skillsplatk.skill_spl_attack_hit(player, enemy, self.skillsplatk_wild_charge['name_skill'], self.charactercreation.characters)
                         else:
                             print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
 
@@ -211,14 +197,7 @@ class DuelAction:
                         roll_attack = self.roll.roll_attack()
 
                         if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
-                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
-                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
-                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
-                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
-                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
-                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                            self.skillsplatk.skill_spl_attack_hit(player, enemy, self.skillsplatk_shadow_arrow['name_skill'], self.charactercreation.characters)
                         else:
                             print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
 
@@ -241,14 +220,7 @@ class DuelAction:
                         roll_attack = self.roll.roll_attack()
 
                         if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
-                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
-                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
-                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
-                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
-                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
-                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                            self.skillsplatk.skill_spl_attack_hit(player, enemy, self.skillsplatk_skeleton['name_skill'], self.charactercreation.characters)
                         else:
                             print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
 
@@ -271,14 +243,7 @@ class DuelAction:
                         roll_attack = self.roll.roll_attack()
 
                         if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
-                            skill_roll, skill_value, skill_damage, skill_effect = self.skillsplatk.skill_spl_attack_hit(player, self.skillsplatk_ethereal_burst['name_skill'])
-                            remaining_hp = self.charactercreation.characters[enemy]['current_hp'] - skill_damage
-                            self.charactercreation.characters[enemy]['current_hp'] = remaining_hp
-                            print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
-                            remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skillsplatk.skill_spl_attack_cost
-                            self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                            print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                            return remaining_hp, remaining_stamina, skill_roll, skill_value, skill_damage, skill_effect
+                            self.skillsplatk.skill_spl_attack_hit(player, enemy, self.skillsplatk_excruciating_gaze['name_skill'], self.charactercreation.characters)
                         else:
                             print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
 
@@ -319,11 +284,7 @@ class DuelAction:
                     final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
 
                     if final_choice_confirm == 'S':
-                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_magic_shield['name_skill'])
-                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
-                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+                        self.skilldef.skill_defense(player, self.skilldef_magic_shield['name_skill'], self.charactercreation.characters)
 
                     else:
                         self.duel_action_choices(player)
@@ -339,11 +300,7 @@ class DuelAction:
                     final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
 
                     if final_choice_confirm == 'S':
-                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_iron_skin['name_skill'])
-                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
-                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+                        self.skilldef.skill_defense(player, self.skilldef_iron_skin['name_skill'], self.charactercreation.characters)
 
                     else:
                         self.duel_action_choices(player)
@@ -359,11 +316,7 @@ class DuelAction:
                     final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
 
                     if final_choice_confirm == 'S':
-                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_invisible_cloak['name_skill'])
-                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
-                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+                        self.skilldef.skill_defense(player, self.skilldef_invisible_cloak['name_skill'], self.charactercreation.characters)
 
                     else:
                         self.duel_action_choices(player)
@@ -379,11 +332,7 @@ class DuelAction:
                     final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
 
                     if final_choice_confirm == 'S':
-                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_bone_shield['name_skill'])
-                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
-                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+                        self.skilldef.skill_defense(player, self.skilldef_bone_shield['name_skill'], self.charactercreation.characters)
 
                     else:
                         self.duel_action_choices(player)
@@ -399,11 +348,7 @@ class DuelAction:
                     final_choice_confirm = input("Deseja realizar esta defesa? (S/N)").upper()
 
                     if final_choice_confirm == 'S':
-                        skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect = self.skilldef.skill_defense(player, self.skilldef_bad_and_good_luck['name_skill'])
-                        remaining_stamina = self.charactercreation.characters[player]['stamina'] - self.skilldef.skill_def_cost
-                        self.charactercreation.characters[player]['stamina'] = remaining_stamina
-                        print(f"Vigor restante de {player}: {max(remaining_stamina, 0)}")
-                        return remaining_stamina, skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect
+                        self.skilldef.skill_defense(player, self.skilldef_bad_and_good_luck['name_skill'], self.charactercreation.characters)
 
                     else:
                         self.duel_action_choices(player)
