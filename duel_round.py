@@ -35,3 +35,16 @@ class DuelRound:
             'second_turn': second_turn})
 
 duelround = DuelRound()
+
+#ideia
+"""
+def round:
+    roll_initiative
+    def turn1():
+        xxx
+    def turn2():
+        zzz
+    turn1()
+    turn2()
+    return turn1, turn2
+"""
