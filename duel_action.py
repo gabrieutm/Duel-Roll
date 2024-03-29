@@ -23,9 +23,13 @@ class DuelAction:
         from char_creation import charcreation
         self.charactercreation = charcreation
 
+
+
         from duel_roll import roll
         self.roll = roll
         
+
+
         from char_skill_simpleatk import skillsplatk, skillsplatk_ethereal_burst, skillsplatk_wild_charge, skillsplatk_shadow_arrow, skillsplatk_skeleton, skillsplatk_excruciating_gaze
         
         self.skillsplatk = skillsplatk
@@ -46,19 +50,27 @@ class DuelAction:
         self.skilldef_bone_shield = skilldef_bone_shield
         self.skilldef_bad_and_good_luck = skilldef_bad_and_good_luck
 
-        self.action_groups = {1: {'Atacar': {1: 'Ataque Simples', 2: 'Ataque Poderoso', 3: 'Ataque Especial'}}, 2: {'Defender': {1: 'Defesa', 2: 'Evasão'}}, 3: {'Curar': {1: 'Cura', 2: 'Descanso'}}}
+
     
     def duel_action_stamina_check(self, player, action_stamina_cost):
         return self.charactercreation.characters[player]['stamina'] >= action_stamina_cost
 
+
+
     def duel_action_choices(self, player):
+
+        self.action_groups = {1: {'Atacar': {1: 'Ataque Simples', 2: 'Ataque Poderoso', 3: 'Ataque Especial'}}, 2: {'Defender': {1: 'Defesa', 2: 'Evasão'}}, 3: {'Curar': {1: 'Cura', 2: 'Descanso'}}}
+        
         while True:
+
             print("Opções de ações: ")
+            
             for key, value in self.action_groups.items():
                 print(f"{key} - {list(value.keys())[0]}")
 
             try:
                 choice = int(input("Escolha digitando o respectivo número da ação (ou 0 a qualquer momento para voltar ao menu de ações): "))
+
             except ValueError:
                 print("Entrada inválida. Por favor, insira um número da lista.")
                 continue
@@ -71,65 +83,85 @@ class DuelAction:
                 if choice == 1:
 
                     while True:
+                        
                         print("Opções de ataque: ")
+                        
                         for key, value in self.action_groups[1]['Atacar'].items():
                             print(f"{key} - {value}")
                         
                         try:
                             final_choice = int(input("Escolha digitando o respectivo número do ataque: "))
+                        
                         except ValueError:
                             print("Entrada inválida. Por favor, insira um número da lista.")
                             continue
                         
                         if final_choice == 0:
                             break
+                        
                         elif final_choice in self.action_groups[1]['Atacar'].keys():
                             final_choice = self.action_groups[1]['Atacar'][final_choice]
                             return final_choice
+                        
                         else:
                             print("Entrada inválida. Por favor, insira um número da lista.")
+                    
                     break
                 
                 if choice == 2:
+                    
                     while True:
+                        
                         print("Opções de defesa: ")
+                        
                         for key, value in self.action_groups[2]['Defender'].items():
                             print(f"{key} - {value}")
                         
                         try:
                             final_choice = int(input("Escolha digitando o respectivo número da defesa: "))
+                        
                         except ValueError:
                             print("Entrada inválida. Por favor, insira um número da lista.")
                             continue
                         
                         if final_choice == 0:
                             break
+                        
                         elif final_choice in self.action_groups[2]['Defender'].keys():
                             final_choice = self.action_groups[2]['Defender'][final_choice]
                             return final_choice
+                        
                         else:
                             print("Entrada inválida. Por favor, insira um número da lista.")
+                    
                     break
 
                 if choice == 3:
+                    
                     while True:
+                        
                         print("Opções de cura: ")
+                        
                         for key, value in self.action_groups[3]['Curar'].items():
                             print(f"{key} - {value}")
                         
                         try:
                             final_choice = int(input("Escolha digitando o respectivo número da cura: "))
+                        
                         except ValueError:
                             print("Entrada inválida. Por favor, insira um número da lista.")
                             continue
                         
                         if final_choice == 0:
                             break
+                        
                         elif final_choice in self.action_groups[3]['Curar'].keys():
                             self.final_choice = self.action_groups[3]['Curar'][final_choice]
                             return final_choice
+                        
                         else:
                             print("Entrada inválida. Por favor, insira um número da lista.")
+                    
                     break
 
             else:
@@ -137,6 +169,7 @@ class DuelAction:
                 continue
     
     def duel_action_move(self, player, enemy, final_choice):
+        
         if final_choice == 'Ataque Simples':
 
             if self.duel_action_stamina_check(player, self.skillsplatk.skill_spl_attack_cost) == True:
@@ -154,6 +187,7 @@ class DuelAction:
 
                         if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
                             self.skillsplatk.skill_spl_attack_hit(player, enemy, self.skillsplatk_ethereal_burst['name_skill'], self.charactercreation.characters)
+                        
                         else:
                             print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
 
@@ -177,6 +211,7 @@ class DuelAction:
 
                         if roll_attack > self.charactercreation.characters[enemy]['current_armor']:
                             self.skillsplatk.skill_spl_attack_hit(player, enemy, self.skillsplatk_wild_charge['name_skill'], self.charactercreation.characters)
+                        
                         else:
                             print(f"Você errou! (armadura do oponente: {self.charactercreation.characters[enemy]['current_armor']})")
 

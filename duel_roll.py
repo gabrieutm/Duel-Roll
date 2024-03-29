@@ -4,8 +4,12 @@ class Roll:
         import random
         self.random = random
 
+    
+    
     def roll_initiative(self, player1, player2):
+        
         roll_itv = self.random.randint(0, 1)
+        
         if roll_itv == 0:
             first_turn = player1
             second_turn = player2
@@ -21,4 +25,6 @@ class Roll:
         print(f"\nDado: {roll_atk}.\n")
         return roll_atk
     
+
+
 roll = Roll()
