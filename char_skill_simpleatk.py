@@ -39,7 +39,7 @@ class SkillSimpleAttack:
         
             for skill_values in skills.values():
                 
-                if skill_values == attacker['class']:
+                if skill_values == characters[attacker]['class']:
 
                     class_skills.append(skills)
         
@@ -52,48 +52,50 @@ class SkillSimpleAttack:
                 
             choose_skill = input("Digite o respectivo número da habilidade que deseja utilizar: (ou digite 'voltar')").lower()
             
-            try:
+            if choose_skill == 'voltar':
 
-                if choose_skill == 'voltar':
+                menu(attacker, enemy)
+                break
 
-                    menu()
-                    break
+            elif int(choose_skill) in class_skills.keys():
 
-                elif int(choose_skill) in class_skills.keys():
+                chosen_skill = class_skills[int(choose_skill)]
 
-                    chosen_skill = class_skills[int(choose_skill)]
+                chosen_skill_confirm = input(f"Tem certeza que deseja usar a habilidade {chosen_skill['name_skill']}? (S/N) ").upper()
+        
+                if chosen_skill_confirm == 'S':
 
-                    chosen_skill_confirm = input(f"Tem certeza que deseja usar a habilidade {chosen_skill['name_skill']}? (S/N) ").upper()
-            
-                    if chosen_skill_confirm == 'S':
-                            
+                    roll_hit = random.randint(1, 20)
+
+                    if roll_hit > characters[enemy]['current_armor']:
+                        
                         skill_roll = chosen_skill['info_skill']['skill_roll']
-                        skill_value = attacker['att_groups']['ATK']
+                        skill_value = characters[attacker]['att_groups']['ATK']
                         skill_damage = skill_roll + skill_value
                         skill_effect = chosen_skill['info_skill']['skill_effect']
                         
                         print(f"Dado: {skill_roll} + Atributo atk: {skill_value} = Dano total: {skill_damage}")
 
-                        remaining_hp = characters[enemy]['current_hp'] - skill_damage
+                        remaining_hp = max(0, characters[enemy]['current_hp'] - skill_damage)
                         characters[enemy]['current_hp'] = remaining_hp
-                        print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
+                        print(f"Vida restante de {enemy}: {remaining_hp}")
 
                         remaining_stamina = max(0, characters[attacker]['stamina'] - self.skill_spl_attack_cost)
                         characters[attacker]['stamina'] = remaining_stamina
                         print(f"Vigor restante de {attacker}: {remaining_stamina}")
 
-                        skill_return = (skill_roll, skill_value, skill_damage, skill_effect, remaining_hp, remaining_stamina)
+                        skill_return = (roll_hit, skill_roll, skill_value, skill_damage, skill_effect, remaining_hp, remaining_stamina)
                         
                         return skill_return
                     
                     else:
-                        continue
+                        print(f"Dado: {roll_hit}.\nVocê errou! (armadura do oponente: {characters[enemy]['current_armor']})")
+                        break
                 
                 else:
-                    print("Entrada inválida. Por favor, insira um número da lista.")
                     continue
             
-            except:
+            else:
                 print("Entrada inválida. Por favor, insira um número da lista.")
                 continue
 

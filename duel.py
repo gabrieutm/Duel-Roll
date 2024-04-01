@@ -2,8 +2,6 @@ from char_creation import charcreation
 
 from duel_round import duelround
 
-charcreation.character_creation()
+from duel_menu import duelmenu
 
-def duel_progression(self):
-    while not any(char_status["death"] for char_status in self.character.characters.values()):
-        duelround.add_round()
+duelround.round_current_turn(charcreation.characters, duelmenu.duel_menu_option)

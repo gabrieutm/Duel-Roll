@@ -30,14 +30,14 @@ class SkillHealing:
     
 
 
-    def skill_healing(self, healer, characters, menu):
+    def skill_healing(self, healer, enemy, characters, menu):
         class_skills = []
         
         for skills in skillhln.skills_healing:
         
             for skill_values in skills.values():
                 
-                if skill_values == healer['class']:
+                if skill_values == characters[healer]['class']:
 
                     class_skills.append(skills)
         
@@ -50,44 +50,38 @@ class SkillHealing:
                 
             choose_skill = input("Digite o respectivo número da habilidade que deseja utilizar: (ou digite 'voltar')").lower()
             
-            try:
+            if choose_skill == 'voltar':
 
-                if choose_skill == 'voltar':
+                menu(healer, enemy)
+                break
 
-                    menu()
-                    break
+            elif int(choose_skill) in class_skills.keys():
 
-                elif int(choose_skill) in class_skills.keys():
+                chosen_skill = class_skills[int(choose_skill)]
 
-                    chosen_skill = class_skills[int(choose_skill)]
+                chosen_skill_confirm = input(f"Tem certeza que deseja usar a habilidade {chosen_skill['name_skill']}? (S/N) ").upper()
+        
+                if chosen_skill_confirm == 'S':
+                        
+                    skill_roll = chosen_skill['info_skill']['skill_roll']
+                    skill_value = healer['att_groups']['HLN']
+                    skill_hp = healer['current_hp']
+                    skill_heal_total = skill_roll + skill_value + skill_hp
+                    skill_effect = chosen_skill['info_skill']['skill_effect']
+                    healer['current_hp'] = min(skill_heal_total, healer['max_hp'])
+                    print(f"Dado: {skill_roll} + Atributo hln: {skill_value} + HP: {skill_hp} = Cura total: {skill_heal_total}")
+                    remaining_stamina = max(0, characters[healer]['stamina'] - skillhln.skill_healing_cost)
+                    characters[healer]['stamina'] = remaining_stamina
+                    print(f"Vigor restante de {healer}: {remaining_stamina}")
 
-                    chosen_skill_confirm = input(f"Tem certeza que deseja usar a habilidade {chosen_skill['name_skill']}? (S/N) ").upper()
-            
-                    if chosen_skill_confirm == 'S':
-                            
-                        skill_roll = chosen_skill['info_skill']['skill_roll']
-                        skill_value = healer['att_groups']['HLN']
-                        skill_hp = healer['current_hp']
-                        skill_heal_total = skill_roll + skill_value + skill_hp
-                        skill_effect = chosen_skill['info_skill']['skill_effect']
-                        healer['current_hp'] = min(skill_heal_total, healer['max_hp'])
-                        print(f"Dado: {skill_roll} + Atributo hln: {skill_value} + HP: {skill_hp} = Cura total: {skill_heal_total}")
-                        remaining_stamina = max(0, characters[healer]['stamina'] - skillhln.skill_healing_cost)
-                        characters[healer]['stamina'] = remaining_stamina
-                        print(f"Vigor restante de {healer}: {remaining_stamina}")
+                    skill_result = (skill_roll, skill_value, skill_hp, skill_heal_total, skill_effect, remaining_stamina)
 
-                        skill_result = (skill_roll, skill_value, skill_hp, skill_heal_total, skill_effect, remaining_stamina)
-
-                        break
-                    
-                    else:
-                        continue
+                    return skill_result
                 
                 else:
-                    print("Entrada inválida. Por favor, insira um número da lista.")
                     continue
             
-            except:
+            else:
                 print("Entrada inválida. Por favor, insira um número da lista.")
                 continue
 

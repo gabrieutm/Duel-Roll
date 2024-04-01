@@ -30,7 +30,7 @@ class SkillDefense:
 
     
     
-    def skill_defense(self, defenser, characters, menu):
+    def skill_defense(self, defenser, enemy, characters, menu):
 
         class_skills = []
         
@@ -38,7 +38,7 @@ class SkillDefense:
         
             for skill_values in skills.values():
                 
-                if skill_values == defenser['class']:
+                if skill_values == characters[defenser]['class']:
 
                     class_skills.append(skills)
         
@@ -79,7 +79,7 @@ class SkillDefense:
 
                         skill_result = (skill_roll, skill_value, skill_armor, skill_defense_total, skill_effect, remaining_stamina)
 
-                        break
+                        return skill_result
                     
                     else:
                         continue

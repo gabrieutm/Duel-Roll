@@ -38,7 +38,7 @@ class SkillSpecial:
         
             for skill_values in skills.values():
                 
-                if skill_values == attacker['class']:
+                if skill_values == characters[player]['class']:
 
                     class_skills.append(skills)
         
@@ -55,7 +55,7 @@ class SkillSpecial:
 
                 if choose_skill == 'voltar':
 
-                    menu()
+                    menu(player, enemy)
                     break
 
                 elif int(choose_skill) in class_skills.keys():
@@ -65,26 +65,18 @@ class SkillSpecial:
                     chosen_skill_confirm = input(f"Tem certeza que deseja usar a habilidade {chosen_skill['name_skill']}? (S/N) ").upper()
             
                     if chosen_skill_confirm == 'S':
-                            
-                        skill_roll = chosen_skill['info_skill']['skill_roll']
-                        skill_value = player['att_groups']['ATK']
-                        skill_damage = skill_roll + skill_value
-                        skill_effect = chosen_skill['info_skill']['skill_effect']
+
+                        roll_hit = random.randint(1, 20)
+
+                        if roll_hit > characters[enemy]['current_armor']:
+                            print('ok')
+
+                        #vou precisar criar uma função pra cada especial e colocar todas as funções num unico dicionario acessível pelo nome da habilidade, são muito diferentes
                         
-                        print(f"Dado: {skill_roll} + Atributo atk: {skill_value} = Dano total: {skill_damage}")
+                        else:
+                            print(f"Dado: {roll_hit}.\nVocê errou! (armadura do oponente: {characters[enemy]['current_armor']})")
+                            break
 
-                        remaining_hp = characters[enemy]['current_hp'] - skill_damage
-                        characters[enemy]['current_hp'] = remaining_hp
-                        print(f"Vida restante de {enemy}: {max(remaining_hp, 0)}")
-
-                        remaining_stamina = max(0, characters[player]['stamina'] - self.skill_spc_cost)
-                        characters[player]['stamina'] = remaining_stamina
-                        print(f"Vigor restante de {player}: {remaining_stamina}")
-
-                        skill_return = (skill_roll, skill_value, skill_damage, skill_effect, remaining_hp, remaining_stamina)
-                        
-                        return skill_return
-                    
                     else:
                         continue
                 
@@ -102,7 +94,7 @@ skillspc = SkillSpecial()
 
 
 
-skillspc_genesis_overload = skillspc.skill_spc_creation('Mago', 'Sobrecarga Gênesis', ['ATK'], ('O mago toca a ponta de seu cajado no chão, evocando uma aura de energia primordial que envolve o ambiente ao redor do oponente. Neste vórtice do início de toda a magia, a própria essência do inimigo é sobrecarregada, levando à desintegração de sua existência.', 'Se atingido, este ataque especial atordoa o oponente por um turno. Até que ele realize uma ação, seus atributos são reduzidos de acordo com os atributos do mago.', None, random.randint(1, 12)))
+skillspc_genesis_overload = skillspc.skill_spc_creation('Mago', 'Sobrecarga Gênesis', ['ATK'], ('O mago evoca uma aura de energia primordial que envolve o ambiente ao redor do oponente. Neste vórtice do início de toda a magia, a própria essência do inimigo é sobrecarregada, levando à desintegração de sua existência.', 'Se atingido, este ataque especial atordoa o oponente por um turno. Até que ele realize uma ação, seus atributos são reduzidos de acordo com os atributos do mago.', None, random.randint(1, 12)))
 
 
 

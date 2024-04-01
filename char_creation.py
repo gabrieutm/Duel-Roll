@@ -118,4 +118,4 @@ charcreation = CharCreation()
 
 if __name__ == '__main__':
     charcreation.character_creation()
-    print(charcreation.characters[charcreation.player1]['att_groups']['ATK'])
+    current_hps = [charcreation.characters[player]['current_hp'] for player in charcreation.characters]
